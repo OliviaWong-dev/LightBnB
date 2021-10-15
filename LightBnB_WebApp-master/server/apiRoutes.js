@@ -52,14 +52,20 @@ module.exports = function (router, database) {
 
   // update an existing reservation
   router.post("/reservations/:reservationId", (req, res) => {
-    console.log("hi");
     const reservationId = req.params.reservationId;
-    console.log(reservationId);
     database
       .updateReservation({ ...req.body, reservation_id: reservationId })
       .then((reservation) => {
         res.send(reservation);
       });
+  });
+
+  router.post("/reviews/:reservationId", (req, res) => {
+    console.log("apiRoutes");
+    const reservationId = req.params.reservationId;
+    database.addReview({ ...req.body }).then((review) => {
+      res.send(review);
+    });
   });
 
   // delete a reservation
@@ -94,6 +100,13 @@ module.exports = function (router, database) {
         console.error(e);
         res.send(e);
       });
+  });
+
+  router.get("/reviews/:propertyId", (req, res) => {
+    const propertyId = req.params.propertyId;
+    database.getReviewsByProperty(propertyId).then((reviews) => {
+      res.send(reviews);
+    });
   });
 
   return router;
