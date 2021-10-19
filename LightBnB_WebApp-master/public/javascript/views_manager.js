@@ -8,7 +8,7 @@ $(() => {
     $propertyListings.detach();
     $searchPropertyForm.detach();
     $logInForm.detach();
-    $signUpForm.detach(); 
+    $signUpForm.detach();
     $newReservationForm.detach();
     $propertyReviews.detach();
     $newReviewForm.detach();

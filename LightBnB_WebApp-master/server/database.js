@@ -117,18 +117,20 @@ const getAllProperties = (options, limit = 10) => {
   }
 
   if (options.minimum_price_per_night) {
-    queryParams.push(`${options.minimum_price_per_night}`);
+    queryParams.push(`${options.minimum_price_per_night}` * 100);
     filterString.push(`cost_per_night > $${queryParams.length}`);
   }
 
   if (options.maximum_price_per_night) {
-    queryParams.push(`${options.maximum_price_per_night}`);
+    queryParams.push(`${options.maximum_price_per_night}` * 100);
     filterString.push(`cost_per_night < $${queryParams.length}`);
   }
 
   if (options.minimum_rating) {
     queryParams.push(`${options.minimum_rating}`);
-    filterString.push(`property_reviews.rating >= $${queryParams.length}`);
+    filterString.push(
+      `property_reviews.rating >= $${queryParams.length}` * 100
+    );
   }
 
   const { owner_id } = options;
@@ -251,7 +253,6 @@ exports.getIndividualReservation = getIndividualReservation;
 //
 const updateReservation = function (reservationData) {
   // base string
-  console.log(reservationData);
   let queryString = `UPDATE reservations SET `;
   const queryParams = [];
   if (reservationData.start_date) {
