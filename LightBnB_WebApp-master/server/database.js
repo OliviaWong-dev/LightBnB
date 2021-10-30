@@ -59,7 +59,6 @@ const addUser = function (user) {
       [user.name, user.email, user.password]
     )
     .then((result) => {
-      console.log(result.rows[0]);
       return result.rows[0];
     })
     .catch((err) => {
@@ -107,7 +106,7 @@ const getAllProperties = (options, limit = 10) => {
   let queryString = `
   SELECT properties.*, avg(property_reviews.rating) as average_rating, count(property_reviews.rating) as review_count
   FROM properties
-  JOIN property_reviews ON properties.id = property_id
+  LEFT JOIN property_reviews ON properties.id = property_id
   `;
 
   // 3
@@ -135,7 +134,7 @@ const getAllProperties = (options, limit = 10) => {
 
   const { owner_id } = options;
   if (owner_id) {
-    queryParams.push(`${owner_id}`);
+    queryParams.push(Number(owner_id));
     filterString.push(`owner_id = $${queryParams.length}`);
   }
 
@@ -150,9 +149,6 @@ const getAllProperties = (options, limit = 10) => {
   ORDER BY cost_per_night
   LIMIT $${queryParams.length};
   `;
-
-  // 5
-  console.log(queryString, queryParams);
 
   // 6
   return pool.query(queryString, queryParams).then((res) => res.rows);
@@ -187,7 +183,6 @@ const addProperty = function (property) {
       ]
     )
     .then((result) => {
-      console.log(result.rows);
       return result.rows;
     })
     .catch((err) => {
@@ -268,7 +263,6 @@ const updateReservation = function (reservationData) {
   }
   queryString += ` WHERE id = $${queryParams.length + 1} RETURNING *;`;
   queryParams.push(reservationData.reservation_id);
-  console.log(queryString);
   return pool
     .query(queryString, queryParams)
     .then((res) => res.rows[0])

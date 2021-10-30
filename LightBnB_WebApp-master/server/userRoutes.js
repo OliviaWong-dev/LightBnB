@@ -12,7 +12,9 @@ module.exports = function (router, database) {
           res.send({ error: "error" });
           return;
         }
+        console.log(user);
         req.session.userId = user.id;
+        console.log(req.session);
         res.send("🤗");
       })
       .catch((e) => res.send(e));

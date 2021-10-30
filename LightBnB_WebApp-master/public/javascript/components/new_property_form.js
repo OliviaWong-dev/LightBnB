@@ -97,7 +97,7 @@ $(() => {
     },
   });
 
-  $("body").on("submit", ".newPropertyForm", function (event) {
+  $newPropertyForm.on("submit", function (event) {
     event.preventDefault();
 
     views_manager.show("none");

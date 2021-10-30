@@ -4,6 +4,7 @@ $(() => {
   window.views_manager = {};
 
   window.views_manager.show = function (item, data = "") {
+    $("#reservation-details").detach();
     $newPropertyForm.detach();
     $propertyListings.detach();
     $searchPropertyForm.detach();
@@ -12,6 +13,7 @@ $(() => {
     $newReservationForm.detach();
     $propertyReviews.detach();
     $newReviewForm.detach();
+    $updateReservationForm.detach();
 
     let datatag = "";
 
