@@ -3,7 +3,7 @@ function getMyDetails() {
     url: "/users/me",
   });
 }
-//test
+
 function logOut() {
   return $.ajax({
     method: "POST",
